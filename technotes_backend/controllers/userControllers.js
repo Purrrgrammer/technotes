@@ -24,7 +24,7 @@ const createNewUser = asyncHandler(async (req, res) => {
       .json({ message: "All fields are required (Bad Request)" });
   }
 
-  const userDupe = await User.findOne({ username }).lean().exec(); //exex => if you use promise awiat and want promise back
+  const userDupe = await User.findOne({ username }).lean().exec(); //exec => if you use promise await and want promise back
   if (userDupe) {
     return res.status(409).json({ message: "duplicate username" });
   }
