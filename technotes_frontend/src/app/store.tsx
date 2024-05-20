@@ -4,5 +4,5 @@ export const store = configureStore({
   reducer: { [apiSlice.reducerPath]: apiSlice.reducer },
   middleware: (getDefauiltMiddleware) =>
     getDefauiltMiddleware().concat(apiSlice.middleware),
-  devTools: true,
+  devTools: true, //redux devtools
 });
