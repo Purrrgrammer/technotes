@@ -10,7 +10,7 @@ const getAllUser = asyncHandler(async (req, res) => {
   if (!users?.length) {
     return res.status(400).json({ message: "no users found" }); //safety feature // no no repeatly calling
   }
-  res.status(200).json({ data: users }); //no need else to end the function //larger function =>
+  res.status(200).json(users); //no need else to end the function //larger function =>
 });
 const createNewUser = asyncHandler(async (req, res) => {
   const { username, password, roles } = req.body;
@@ -24,11 +24,7 @@ const createNewUser = asyncHandler(async (req, res) => {
       .json({ message: "All fields are required (Bad Request)" });
   }
 
-<<<<<<< HEAD:controllers/userControllers.js
-  const userDupe = await User.findOne({ username }).lean().exec(); //exex => if you use promise awiat and want promise back
-=======
   const userDupe = await User.findOne({ username }).lean().exec(); //exec => if you use promise await and want promise back
->>>>>>> features:technotes_backend/controllers/userControllers.js
   if (userDupe) {
     return res.status(409).json({ message: "duplicate username" });
   }

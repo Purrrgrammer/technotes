@@ -22,7 +22,24 @@ const UsersList = () => {
     const tableContent = ids?.length
       ? ids.map((userId) => <User key={userId} userId={userId}></User>)
       : null;
-    content = <div>{tableContent}</div>;
+    content = (
+      <table className="table table--users">
+        <thead className="table__thead">
+          <tr>
+            <th scope="col" className="table__th user__username">
+              Username
+            </th>
+            <th scope="col" className="table__th user__roles">
+              Roles
+            </th>
+            <th scope="col" className="table__th user__edit">
+              Edit
+            </th>
+          </tr>
+        </thead>
+        <tbody>{tableContent}</tbody>
+      </table>
+    );
     return content;
   }
   return content;

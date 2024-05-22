@@ -14,6 +14,7 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import { apiSlice } from "./app/api/apislice";
+import UsersList from "./features/users/UsersList";
 // import { HomePage, AboutPage } from "./routes/index";
 
 const router = createBrowserRouter([
@@ -39,6 +40,11 @@ const router = createBrowserRouter([
           {
             path: "note",
             element: <NotesList />,
+            children: [],
+          },
+          {
+            path: "users",
+            element: <UsersList />,
             children: [],
           },
         ],
