@@ -1,4 +1,4 @@
-export interface User {
+export interface UserType {
   ids?: string;
   _id?: string;
   id?: string;
@@ -13,8 +13,13 @@ export interface UserEntity {
   id?: { id: string };
 }
 export interface Notes {
+  ids?: string;
+  _id?: string;
+  id?: string;
   username: string;
   title: string;
   text: string;
   completed: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
