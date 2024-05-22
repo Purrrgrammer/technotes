@@ -7,6 +7,7 @@ const path = require("path");
 const { logger, logEvents } = require("./middleware/logger");
 const errorHandler = require("./middleware/errorHandler.js");
 const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 const cors = require("cors");
 
 const corsOption = require("./config/corsOption.js");
@@ -17,16 +18,16 @@ console.log(process.env.NODE_ENV);
 // app.use("/");
 //middleware
 connectDB();
-app.use(logger); //before
 app.use(cors(corsOption)); //before //creating CORS option
+app.use(logger); //before
 app.use("/", express.static(path.join(__dirname, "public"))); //relavtive where server file is
-
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-
 app.use(express.json());
 
 app.use("/", require("./routes/root.js"));
-app.use("/users", require("./routes/userRoutes.js"));
+app.use("/users", require("./routes/userRoutes"));
+app.use("/notes", require("./routes/noteRoutes"));
 
 // everything at the end
 app.all("*", (req, res) => {

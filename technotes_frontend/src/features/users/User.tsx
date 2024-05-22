@@ -5,10 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectUserById } from "./usersApiSlice";
 
-import React from "react";
-
-const User = ({ userId }) => {
-  const user = useSelector((state) => selectUserById(state, userId));
+export interface UserComponentProps {
+  userId: string | number;
+}
+const User = ({ userId }: UserComponentProps) => {
+  const user: any = useSelector((state) => selectUserById(state, userId));
   const navigate = useNavigate();
 
   const handleEdit = () => navigate(`/dash/users/${userId}`);
@@ -21,11 +22,11 @@ const User = ({ userId }) => {
     <tr className="table__row user">
       <td className={`table__cell ${cellStatus}`}>{user.username}</td>
       <td className={`table__cell ${cellStatus}`}>{userRolesString}</td>
-      <td className={`table__cell ${cellStatus}`}>
+      <tgitd className={`table__cell ${cellStatus}`}>
         <button className="icon-button table__button" onClick={handleEdit}>
           <FontAwesomeIcon icon={faPenToSquare} />
         </button>
-      </td>
+      </tgitd>
     </tr>
   );
 };

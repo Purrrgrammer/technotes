@@ -38,7 +38,7 @@ const router = createBrowserRouter([
         children: [
           { index: true, element: <Welcome /> },
           {
-            path: "note",
+            path: "notes",
             element: <NotesList />,
             children: [],
           },

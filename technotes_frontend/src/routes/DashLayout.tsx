@@ -5,9 +5,10 @@ import DashFooter from "../components/DashFooter";
 
 const DashLayout = () => {
   return (
-    <div>
+    <div className="flex flex-col justify-between h-[100vh] bg-slate-200 p-10">
       <DashHeader />
-      <div>
+      <div className="">
+        <b>Content</b>
         <Outlet />
       </div>
       <DashFooter />
