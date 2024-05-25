@@ -15,6 +15,10 @@ import { store } from "./app/store";
 import { ApiProvider } from "@reduxjs/toolkit/query/react";
 import { apiSlice } from "./app/api/apislice";
 import UsersList from "./features/users/UsersList";
+import User from "./features/users/User";
+import AddUserFrom from "./features/users/AddUserFrom";
+import EditUser from "./features/users/EditsUser";
+import Prefetch from "./routes/Prefetch";
 // import { HomePage, AboutPage } from "./routes/index";
 
 const router = createBrowserRouter([
@@ -33,19 +37,35 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "dash",
-        element: <DashLayout />,
+        element: <Prefetch />,
         children: [
-          { index: true, element: <Welcome /> },
           {
-            path: "notes",
-            element: <NotesList />,
-            children: [],
-          },
-          {
-            path: "users",
-            element: <UsersList />,
-            children: [],
+            path: "dash",
+            element: <DashLayout />,
+            children: [
+              {
+                path: "users",
+                children: [
+                  {
+                    index: true,
+                    element: <UsersList />,
+                  },
+                  {
+                    path: "new",
+                    element: <AddUserFrom />,
+                  },
+                  {
+                    path: ":id",
+                    element: <EditUser />,
+                  },
+                ],
+              },
+              {
+                path: "notes",
+                element: <NotesList />,
+                children: [],
+              },
+            ],
           },
         ],
       },

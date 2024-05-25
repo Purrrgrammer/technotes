@@ -4,12 +4,16 @@ import { useNavigate } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { selectNoteById } from "./notesApiSlice";
+import { useEffect } from "react";
 export interface NoteComponentProps {
   noteId: string | number;
 }
 const Note = ({ noteId }: NoteComponentProps) => {
   const note = useSelector((state: any) => selectNoteById(state, noteId));
 
+  useEffect(() => {
+    console.log(note);
+  }, []);
   const navigate = useNavigate();
 
   if (note) {
