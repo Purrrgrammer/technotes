@@ -12,7 +12,7 @@ const login = asyncHandler(async (req, res) => {
   }
 
   if (!foundUser || !foundUser.active) {
-    return res.status(401).json({ messsage: "unauthorized" });
+    return res.status(401).json({ messsage: "unauthorized, user not found" });
   }
 
   const matchedPassword = await bcrypt.compare(password, foundUser.password);
