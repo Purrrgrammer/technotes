@@ -1,6 +1,27 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useSendLogoutMutation } from "../features/auth/authApiSlice";
 const DashHeader = () => {
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [sendLogout, { isLoading, isSuccess, isError, error }] =
+    useSendLogoutMutation();
+  const onLogoutClicked = () => {
+    sendLogout(null);
+    if (isSuccess) {
+      navigate("/home");
+    }
+  };
+
+  const logoutButton = (
+    <button title="logout" onClick={onLogoutClicked} type="button">
+      Logout
+    </button>
+  );
+
+  if (isLoading) return <p>Logging Out...</p>;
+
+  if (isError) return <p>Error: {error.data?.message}</p>;
   return (
     <header>
       <div className="flex gap-x-10">
@@ -16,7 +37,7 @@ const DashHeader = () => {
         <Link to="/dash/notes">
           <h1>add new note</h1>
         </Link>
-        <nav>{/* nav btn */}</nav>
+        <nav>{logoutButton}</nav>
       </div>
     </header>
   );

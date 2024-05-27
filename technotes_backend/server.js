@@ -28,6 +28,7 @@ app.use(express.json());
 app.use("/", require("./routes/root.js"));
 app.use("/users", require("./routes/userRoutes"));
 app.use("/notes", require("./routes/noteRoutes"));
+app.use("/auth", require("./routes/authRoutes"));
 
 // everything at the end
 app.all("*", (req, res) => {
