@@ -17,6 +17,7 @@ import UsersList from "./features/users/UsersList";
 import AddUserFrom from "./features/users/AddUserFrom";
 import EditUser from "./features/users/EditsUser";
 import Prefetch from "./routes/Prefetch";
+import PersistLogin from "./features/auth/PersistLogin";
 // import { HomePage, AboutPage } from "./routes/index";
 
 const router = createBrowserRouter([
@@ -35,33 +36,38 @@ const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        element: <Prefetch />,
+        element: <PersistLogin />,
         children: [
           {
-            path: "dash",
-            element: <DashLayout />,
+            element: <Prefetch />,
             children: [
               {
-                path: "users",
+                path: "dash",
+                element: <DashLayout />,
                 children: [
                   {
-                    index: true,
-                    element: <UsersList />,
+                    path: "users",
+                    children: [
+                      {
+                        index: true,
+                        element: <UsersList />,
+                      },
+                      {
+                        path: "new",
+                        element: <AddUserFrom />,
+                      },
+                      {
+                        path: ":id",
+                        element: <EditUser />,
+                      },
+                    ],
                   },
                   {
-                    path: "new",
-                    element: <AddUserFrom />,
-                  },
-                  {
-                    path: ":id",
-                    element: <EditUser />,
+                    path: "notes",
+                    element: <NotesList />,
+                    children: [],
                   },
                 ],
-              },
-              {
-                path: "notes",
-                element: <NotesList />,
-                children: [],
               },
             ],
           },

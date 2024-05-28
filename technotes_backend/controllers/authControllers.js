@@ -8,18 +8,18 @@ const login = asyncHandler(async (req, res) => {
   const foundUser = await User.findOne({ username }).exec();
 
   if (!username || !password) {
-    return res.status(400).json({ messsage: "please filled all fields" });
+    return res.status(400).json({ message: "please filled all fields" });
   }
 
   if (!foundUser || !foundUser.active) {
-    return res.status(401).json({ messsage: "unauthorized, user not found" });
+    return res.status(401).json({ message: "unauthorized, user not found" });
   }
 
   const matchedPassword = await bcrypt.compare(password, foundUser.password);
   if (!matchedPassword) {
     return res
       .status(401)
-      .json({ messsage: "unauthorized, password is not matched" });
+      .json({ message: "unauthorized, password is not matched" });
   }
 
   const accessToken = jwt.sign(
@@ -38,7 +38,7 @@ const login = asyncHandler(async (req, res) => {
       username: foundUser.username,
     },
     process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: "1d" },
+    { expiresIn: "7d" },
     process.env.JWT_ALGO
   );
 
@@ -59,14 +59,14 @@ const refresh = asyncHandler(async (req, res) => {
   if (!cookies?.jwt)
     return res
       .status(401)
-      .json({ messsage: "unauthorized, password is not matched" });
+      .json({ message: "unauthorized, password is not matched" });
 
   jwt.verify(
     cookies.jwt,
     process.env.REFRESH_TOKEN_SECRET,
     process.env.JWT_ALGO,
     async (err, encoded) => {
-      if (err) return res.status(401).json({ messsage: "Forbidden" });
+      if (err) return res.status(401).json({ message: "Forbidden" });
       const foundUser = await User.findOne({
         username: encoded.username,
       }).exec();

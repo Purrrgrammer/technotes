@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query";
 import { apiSlice } from "../../app/api/apislice";
-import { logout } from "./authSlice";
+import { logout, setCredentials } from "./authSlice";
 
 const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -20,19 +20,38 @@ const authApiSlice = apiSlice.injectEndpoints({
       query: () => ({ url: "/auth/logout", method: "POST" }),
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
-          await queryFulfilled;
+          const { data } = await queryFulfilled;
+          console.log(data);
+
           dispatch(logout());
+
+          //problem occurs when loging out on note and user List
+          //the component dont unsubscrib (make sure that it unsubscribe the data after unmounted)
+          setTimeout(() => {
+            dispatch(apiSlice.util.resetApiState());
+          }, 1000);
           //clear apiSlice => method call to clear out the cached and query subsciption from api
-          dispatch(apiSlice.util.resetApiState());
         } catch (error) {
           console.log(error);
         }
       },
     }),
-    refresh: builder.query({
+    refresh: builder.mutation({
       query: () => ({ url: "/auth/refresh", method: "GET" }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          console.log(data);
+          const { accessToken } = data;
+          dispatch(setCredentials({ accessToken })); //dont have to provide it in every component
+
+          //so when we use refresh it will set credentails for us
+        } catch (error) {
+          console.log(error);
+        }
+      },
     }),
   }),
 });
-export const { useLoginMutation, useSendLogoutMutation, useRefreshQuery } =
+export const { useLoginMutation, useSendLogoutMutation, useRefreshMutation } =
   authApiSlice;

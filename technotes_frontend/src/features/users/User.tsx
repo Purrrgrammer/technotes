@@ -14,15 +14,17 @@ const User = ({ userId }: UserComponentProps) => {
 
   const handleEdit = () => navigate(`/dash/users/${userId}`);
 
-  const userRolesString = user.roles.toString().replaceAll(",", ", ");
+  const userRolesString = user
+    ? user.roles.toString().replaceAll(",", ", ")
+    : null;
 
-  const cellStatus = user.active ? "" : "table__cell--inactive";
+  // const cellStatus = user ? user.active ? "" : "table__cell--inactive";
 
   return (
     <tr className="table__row user">
-      <td className={`table__cell ${cellStatus}`}>{user.username}</td>
-      <td className={`table__cell ${cellStatus}`}>{userRolesString}</td>
-      <td className={`table__cell ${cellStatus}`}>
+      <td className={`table__cell `}>{user.username}</td>
+      <td className={`table__cell `}>{userRolesString}</td>
+      <td className={`table__cell `}>
         <button className="icon-button table__button" onClick={handleEdit}>
           <FontAwesomeIcon icon={faPenToSquare} />
         </button>
