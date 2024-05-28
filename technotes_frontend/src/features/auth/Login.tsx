@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "./authApiSlice";
 import { setCredentials } from "./authSlice";
+import usePersist from "../hooks/usePersist";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -13,8 +14,11 @@ const Login = () => {
   const [errMsg, setErrMsg] = useState("");
   const userRef = useRef();
   const errRef = useRef();
+
+  const [persist, setPersist] = usePersist();
   const handleUserInput = (e) => setUsername(e.target.value);
   const handlePwdInput = (e) => setPassword(e.target.value);
+  const handleToggle = (e) => setPersist((prev) => !prev);
   useEffect(() => {
     userRef.current.focus();
   }, []);
@@ -78,6 +82,15 @@ const Login = () => {
             />
             <button type="submit">Sign In</button>
           </form>
+          <label htmlFor="persist" className="">
+            <input
+              type="checkbox"
+              id="persist"
+              onChange={handleToggle}
+              checked={persist}
+            />
+            Trust this label
+          </label>
         </main>
         <footer>
           <Link to="/home">Back to Home</Link>
